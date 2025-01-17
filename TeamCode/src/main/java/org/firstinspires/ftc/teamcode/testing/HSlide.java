@@ -13,22 +13,21 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Config
 @TeleOp(name="servo position test", group="testing")
-public class servoTest extends LinearOpMode {
+public class HSlide extends LinearOpMode {
 
-    public static double targetPosition = 0;
+    public static double targetPower = 0;
 
     @Override
     public void runOpMode() {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        Servo servo = hardwareMap.get(Servo.class,"servo");
+        DcMotorEx Hslide = hardwareMap.get(DcMotorEx.class,"hslide");
 
         waitForStart();
 
         while (opModeIsActive()) {
-            servo.setPosition(targetPosition);
-
-            telemetry.addData("Servo Position ", servo.getPosition());
+            Hslide.setPower(targetPower);
+            telemetry.addData("Servo Position ", Hslide.getPower());
             telemetry.update();
         }
     }

@@ -9,7 +9,7 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.TeleOp.PinpointDrive;
+import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 
 
 @Config
@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.PinpointDrive;
 public class AutoBlueNoBuckets extends LinearOpMode {
     public void runOpMode() {
         // instantiate your MecanumDrive at a particular pose.
-        Pose2d beginPose = new Pose2d(-12, 56, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(-8, 56, Math.toRadians(90));
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
         waitForStart();
         Actions.runBlocking(
@@ -35,13 +35,15 @@ public class AutoBlueNoBuckets extends LinearOpMode {
                         .lineToX(-47)
                         .setTangent(Math.PI/2)
                         .lineToY(42)
+                        .setTangent(-Math.PI/2)
                         .splineToLinearHeading(new Pose2d(-57,10,Math.PI/2), -Math.PI)
                         .setTangent(Math.PI/2)
                         .lineToY(42)
+                        .setTangent(-Math.PI/2)
                         .splineToLinearHeading(new Pose2d(-64,8,Math.PI/2), -Math.PI)
                         .setTangent(Math.PI/2)
                         .lineToY(42)
-                        .splineToLinearHeading(new Pose2d(-54,53,Math.PI/2), -Math.PI)
+                        .splineToLinearHeading(new Pose2d(-54,53,Math.PI/2), Math.PI)
                         .waitSeconds(1)
                         .setTangent(Math.toRadians(0))
                         .splineToConstantHeading(new Vector2d(-8, 36), -Math.PI / 2)
@@ -56,28 +58,14 @@ public class AutoBlueNoBuckets extends LinearOpMode {
                         .setTangent(Math.toRadians(0))
                         .splineToConstantHeading(new Vector2d(-8, 36), -Math.PI / 2)
                         .waitSeconds(1)
-                        .setTangent(Math.PI)
-                        .lineToX(-32)
-                        .splineToLinearHeading(new Pose2d(-32, 0, Math.PI/2), -Math.PI / 4)
+//Parking for no Buckets
+                        .splineToLinearHeading(new Pose2d(-52, 56, Math.PI/2), -3*Math.PI /2 )
                         .build());
-                /*  .setTangent(Math.PI)
-                        .strafeTo(new Vector2d(-12,38))
-                        .waitSeconds(0.4)
-                        .setTangent(Math.PI)
-                        .lineToX(-36)
-                        .setTangent(Math.PI/2)
-                        .lineToY(12)
-                        .setTangent(Math.PI)
-                        .lineToX(-47)
-                        .setTangent(Math.PI/2)
-                        .lineToY(42)
-                        .splineToLinearHeading(new Pose2d(-57,10,Math.PI/2), -Math.PI)
-                        .setTangent(Math.PI/2)
-                        .lineToY(42)
-                        .splineToLinearHeading(new Pose2d(-66,7,Math.PI/2), -Math.PI)
-                        .setTangent(Math.PI/2)
-                        .lineToY(42)
-                        .splineToLinearHeading(new Pose2d(-28, 0,Math.PI/2), Math.PI/2)
-                        .build()); */
+             /* Parking submersible
+             .setTangent(Math.PI)
+                .lineToX(-32)
+                .splineToLinearHeading(new Pose2d(-32, 0, Math.PI/2), -Math.PI / 4)
+*/
+
     }
 }
