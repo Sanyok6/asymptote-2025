@@ -17,13 +17,13 @@ import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 public class AutoBlueNoBuckets extends LinearOpMode {
     public void runOpMode() {
         // instantiate your MecanumDrive at a particular pose.
-        Pose2d beginPose = new Pose2d(-8, 56, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(-8, 66.5, Math.toRadians(90));
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
         waitForStart();
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         .setTangent(Math.PI)
-                        .strafeTo(new Vector2d(-12,38))
+                        .strafeTo(new Vector2d(-9,38))
                         .waitSeconds(1)
                         .setTangent(Math.PI)
                         //    .splineToConstantHeading(new Vector2d(-36, 12), -0.2*Math.PI)
@@ -40,20 +40,21 @@ public class AutoBlueNoBuckets extends LinearOpMode {
                         .setTangent(Math.PI/2)
                         .lineToY(42)
                         .setTangent(-Math.PI/2)
-                        .splineToLinearHeading(new Pose2d(-64,8,Math.PI/2), -Math.PI)
+                        .splineToLinearHeading(new Pose2d(-64,10,Math.PI/2), -Math.PI)
                         .setTangent(Math.PI/2)
                         .lineToY(42)
-                        .splineToLinearHeading(new Pose2d(-54,53,Math.PI/2), Math.PI)
+                        .setTangent(Math.PI/2)
+                        .splineToLinearHeading(new Pose2d(-48,53,Math.PI/2), 0)
+                        .waitSeconds(1)
+                        .setTangent(Math.toRadians(0))
+                        .splineToConstantHeading(new Vector2d(-8, 36), -Math.PI / 2) //changed to a little higher?
+                        .waitSeconds(1)
+                        .splineToConstantHeading(new Vector2d(-48, 53), Math.PI)
                         .waitSeconds(1)
                         .setTangent(Math.toRadians(0))
                         .splineToConstantHeading(new Vector2d(-8, 36), -Math.PI / 2)
                         .waitSeconds(1)
-                        .splineToConstantHeading(new Vector2d(-54, 53), Math.PI / 2)
-                        .waitSeconds(1)
-                        .setTangent(Math.toRadians(0))
-                        .splineToConstantHeading(new Vector2d(-8, 36), -Math.PI / 2)
-                        .waitSeconds(1)
-                        .splineToConstantHeading(new Vector2d(-54, 53), Math.PI / 2)
+                        .splineToConstantHeading(new Vector2d(-48, 53), Math.PI)
                         .waitSeconds(1)
                         .setTangent(Math.toRadians(0))
                         .splineToConstantHeading(new Vector2d(-8, 36), -Math.PI / 2)
