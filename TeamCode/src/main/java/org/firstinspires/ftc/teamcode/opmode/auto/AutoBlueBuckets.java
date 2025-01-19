@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 public class AutoBlueBuckets extends LinearOpMode {
     public void runOpMode() {
         // instantiate your MecanumDrive at a particular pose.
-        Pose2d beginPose = new Pose2d(8, 56, Math.toRadians(-180));
+        Pose2d beginPose = new Pose2d(32.8, 61.4, Math.toRadians(-180));
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
         waitForStart();
         Actions.runBlocking(
