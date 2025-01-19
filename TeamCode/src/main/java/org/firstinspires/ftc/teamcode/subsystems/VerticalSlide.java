@@ -1,63 +1,65 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
-@TeleOp
-public class VerticalSlide extends LinearOpMode {
-    @Override
-    public void runOpMode() throws InterruptedException {
-
-        double Kp = 0;
-        double Ki = 0;
-        double Kd = 0;
-
-        double reference = 100;
-
-        double integralSum = 0;
-
-        double lastError = 0;
-
-        DcMotor frontMotor = hardwareMap.dcMotor.get("Arm Motor");
-        DcMotor backMotor = hardwareMap.dcMotor.get("Arm Motor");
-
-        // Elapsed timer class from SDK, please use it, it's epic
-        ElapsedTime timer = new ElapsedTime();
-
-        while (true) {
-
-            // obtain the encoder position
-            double encoderPosition =frontMotor.getCurrentPosition();
-            // calculate the error
-            double error = reference - encoderPosition;
-
-            // rate of change of the error
-            double derivative = (error - lastError) / timer.seconds();
-
-            // sum of all error over time
-            integralSum = integralSum + (error * timer.seconds());
-
-            double out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
-
-//                frontMotor.setPower(out);
-//                backMotor.setPower(out);
-
-            lastError = error;
-
-            // reset the timer for next time
-            timer.reset();
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
-            // Show the target position of the armMotor on telemetry
-            telemetry.addData("Desired Position", reference);
-            telemetry.addData("Current position", frontMotor.getCurrentPosition());
+public class VerticalSlide {
 
-            telemetry.update();
+    public DcMotor frontMotor;
+    public DcMotor backMotor;
+
+    public double Kp = 0.003;
+    public double Ki = 0;
+    public double Kd = 0;
+
+    //max: 1000
+    public double targetPosition = 100;
+    double integralSum = 0;
+    double lastError = 0;
+    ElapsedTime timer = new ElapsedTime();
+
+    public VerticalSlide(HardwareMap hardwareMap) {
+        frontMotor = hardwareMap.dcMotor.get("vslideFront");
+        backMotor = hardwareMap.dcMotor.get("vslideBack");
+    }
+
+    // max: 3400
+    public void setTargetPosition(int targetPosition) {
+        this.targetPosition = targetPosition;
+    }
+
+    public void update() {
+
+        // obtain the encoder position
+        double encoderPosition = frontMotor.getCurrentPosition();
+        // calculate the error
+        double error = targetPosition - encoderPosition;
+
+        // rate of change of the error
+        double derivative = (error - lastError) / timer.seconds();
+
+        // sum of all error over time
+        integralSum = integralSum + (error * timer.seconds());
+
+        double out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
+
+        if (out > 0) {
+            out = Math.min(out, 1);
+        } else {
+            out = Math.max(out, -1);
         }
 
+        frontMotor.setPower(out);
+        backMotor.setPower(out);
+
+        lastError = error;
+
+        // reset the timer for next time
+        timer.reset();
     }
 }
 

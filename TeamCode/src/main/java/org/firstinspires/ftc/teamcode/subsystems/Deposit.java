@@ -8,18 +8,33 @@ public class Deposit {
     // Servo Values Minimum 0, Max 0.8
     private Servo rightRotateServo;
 //    private Servo leftRotateServo;
+    private Servo pivotServo;
+    private Servo clawServo;
 
     public Deposit(HardwareMap hardwareMap) {
-        rightRotateServo = hardwareMap.servo.get("rightRotateServo");
-//        leftRotateServo = hardwareMap.servo.get("leftRotateServo");
+        rightRotateServo = hardwareMap.servo.get("rightDepositRotate");
+//        leftRotateServo = hardwareMap.servo.get("leftDepositRotate");
+        pivotServo = hardwareMap.servo.get("depositPivot");
+        clawServo = hardwareMap.servo.get("depositClaw");
     }
 
-    public void transferPos() {
-        rightRotateServo.setPosition(0);
+    public void transfer() {
+        rightRotateServo.setPosition(0.55);
+        pivotServo.setPosition(1);
     }
-    public void depositPos()
+    public void drive() {
+        rightRotateServo.setPosition(0.6);
+        pivotServo.setPosition(0.9);
+    }
+    public void deposit()
     {
-        rightRotateServo.setPosition(0.8);
+        rightRotateServo.setPosition(0.95);
+        pivotServo.setPosition(0.1);
     }
-
+    public void openClaw() {
+        clawServo.setPosition(0);
+    }
+    public void closeClaw() {
+        clawServo.setPosition(0.55);
+    }
 }

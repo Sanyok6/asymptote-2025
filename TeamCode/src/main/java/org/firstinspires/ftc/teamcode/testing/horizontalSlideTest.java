@@ -5,29 +5,32 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.subsystems.HorizontalSlide;
 
 @Config
-@TeleOp(name="servo position test", group="testing")
-public class HSlide extends LinearOpMode {
+@TeleOp(name="Horizontal slide test", group="testing")
+public class horizontalSlideTest extends LinearOpMode {
 
-    public static double targetPower = 0;
+    public static int targetPosition = 0;
 
     @Override
     public void runOpMode() {
-        Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+        // Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        DcMotorEx Hslide = hardwareMap.get(DcMotorEx.class,"hslide");
+        HorizontalSlide horizontalSlide = new HorizontalSlide(hardwareMap);
 
         waitForStart();
 
         while (opModeIsActive()) {
-            Hslide.setPower(targetPower);
-            telemetry.addData("Servo Position ", Hslide.getPower());
+            horizontalSlide.setTargetPosition(targetPosition);
+
+            telemetry.addData("Horizontal Slide Position ", horizontalSlide.getCurrentPosition());
             telemetry.update();
         }
     }

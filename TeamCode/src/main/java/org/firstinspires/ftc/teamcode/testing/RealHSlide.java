@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Config
-@TeleOp(name="servo position test", group="testing")
+@TeleOp(name="Old horizontal slide test", group="testing")
 public class RealHSlide extends LinearOpMode {
 
     public static int targetPosition = 1;
@@ -22,13 +22,17 @@ public class RealHSlide extends LinearOpMode {
     public void runOpMode() {
        // Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        DcMotorEx Hslide = hardwareMap.get(DcMotorEx.class,"hslide");
-        Hslide.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        DcMotorEx hslide = hardwareMap.get(DcMotorEx.class,"hslide");
+        hslide.setDirection(DcMotorSimple.Direction.REVERSE);
+
         waitForStart();
 
+        hslide.setTargetPosition(200);
+        hslide.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        hslide.setPower(0.3);
+
         while (opModeIsActive()) {
-            Hslide.setTargetPosition(targetPosition);
-            telemetry.addData("Slide Position ", Hslide.getCurrentPosition());
+            telemetry.addData("Horizontal Slide Position ", hslide.getCurrentPosition());
             telemetry.update();
         }
     }
