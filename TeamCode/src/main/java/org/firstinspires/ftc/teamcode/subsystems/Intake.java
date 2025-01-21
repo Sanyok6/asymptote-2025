@@ -26,7 +26,7 @@ public class Intake {
     public void lower() {
         diffyLeft.setPosition(0.8);
         diffyRight.setPosition(0.1);
-        intakePivot.setPosition(0.725);
+        intakePivot.setPosition(0.7);
     }
 
     public void transfer() {
