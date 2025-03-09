@@ -21,7 +21,7 @@ public class horizontalSlideTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        // Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+        // Telemetry telemetry a= new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         HorizontalSlide horizontalSlide = new HorizontalSlide(hardwareMap);
 

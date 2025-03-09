@@ -17,9 +17,11 @@ import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 public class AutoBlueNoBuckets extends LinearOpMode {
     public void runOpMode() {
         // instantiate your MecanumDrive at a particular pose.
+
         Pose2d beginPose = new Pose2d(-8.8, 59, Math.toRadians(0));
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
         waitForStart();
+
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         .setTangent(Math.toRadians(-90))
@@ -31,7 +33,6 @@ public class AutoBlueNoBuckets extends LinearOpMode {
                         .lineToX(-36)
                         .setTangent(Math.PI/2)
                         .lineToY(9)
-
                         .setTangent(Math.PI)
                         .lineToX(-47)
                         .setTangent(Math.PI/2)
