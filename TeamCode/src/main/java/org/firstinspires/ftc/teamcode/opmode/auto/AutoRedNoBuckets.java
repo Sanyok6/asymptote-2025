@@ -17,18 +17,23 @@ import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 public class AutoRedNoBuckets extends LinearOpMode {
     public void runOpMode() {
         // instantiate your MecanumDrive at a particular pose.
-        Pose2d beginPose = new Pose2d(8.8, -61.4, Math.toRadians(-90));
+        Pose2d beginPose = new Pose2d(8.8, -61.4, Math.toRadians(0));
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
         waitForStart();
+     Actions.runBlocking(
         drive.actionBuilder(beginPose)
-                .setTangent(Math.PI)
-                .strafeTo(new Vector2d(9,-38))
+
+                .setTangent(Math.PI/2)
+                .splineToLinearHeading(new Pose2d(9,-40,-Math.PI/2), Math.PI/2)
+
                 .waitSeconds(1)
+
                 .setTangent(Math.PI)
                 //    .splineToConstantHeading(new Vector2d(-36, 12), -0.2*Math.PI)
                 .lineToX(36)
+                .turn(Math.toRadians(180))
                 .setTangent(Math.PI/2)
-                .lineToY(-12)
+                .lineToY(-15)
 
                 .setTangent(Math.PI)
                 .lineToX(47)
@@ -37,7 +42,7 @@ public class AutoRedNoBuckets extends LinearOpMode {
                 .waitSeconds(1)
                 .setTangent(0.65*Math.PI)
 
-                .splineToLinearHeading(new Pose2d(54,-5,-Math.PI/2), -Math.PI/2)
+                .splineToLinearHeading(new Pose2d(63,-13,Math.PI/2), -Math.PI/2)
                 .waitSeconds(1)
                 .setTangent(-Math.PI/2)
                 .lineToY(-45)
@@ -45,12 +50,15 @@ public class AutoRedNoBuckets extends LinearOpMode {
                 .waitSeconds(1)
 //Parking for no Buckets
                 .setTangent(Math.PI*0.7)
-                .splineToLinearHeading(new Pose2d(64,-5,-Math.PI/2), -Math.PI/2)
+                .splineToLinearHeading(new Pose2d(68,-13,Math.PI/2), -Math.PI/2)
                 .waitSeconds(1)
-                .lineToY(-45)
                 .lineToY(-55)
-                .build();
-     //   Actions.runBlocking(
+               // .waitSeconds()
+                .splineToLinearHeading(new Pose2d(68,-13,Math.PI/2), -Math.PI/2)
+
+                .build());
+
+        //   Actions.runBlocking(
 
              /* Parking submersible
              .setTangent(Math.PI)
