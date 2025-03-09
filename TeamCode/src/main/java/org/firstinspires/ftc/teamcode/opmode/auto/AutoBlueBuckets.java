@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.subsystems.ScoringMechanism;
+import org.firstinspires.ftc.teamcode.subsystems.ScoringMechanismPosition;
 
 import androidx.annotation.NonNull;
 
@@ -39,64 +40,57 @@ public class AutoBlueBuckets extends LinearOpMode {
         // instantiate your MecanumDrive at a particular pose.
         Pose2d beginPose = new Pose2d(32.8, 61, Math.toRadians(-180));
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
+
+        ScoringMechanism scoringMechanism = new ScoringMechanism(hardwareMap);
+
         waitForStart();
-     //   Action DriveBlueBucket = drive.actionBuilder(beginPose)
-        Actions.runBlocking(
-                drive.actionBuilder(beginPose)
+        //   Action DriveBlueBucket = drive.actionBuilder(beginPose)
+        Action traj = drive.actionBuilder(beginPose)
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(60.5, 54,Math.toRadians(-135)), Math.toRadians(45))
+                .splineToLinearHeading(new Pose2d(60.5, 54, Math.toRadians(-135)), Math.toRadians(45))
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(180))
 
 
-                .splineToLinearHeading(new Pose2d(50.8, 38,Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(50.8, 38, Math.toRadians(-90)), Math.toRadians(-90))
                 // .turn(Math.toRadians(45))
                 // .strafeTo(new Vector2d(48,46))
                 .waitSeconds(1)
+                .stopAndAdd((Action) scoringMechanism.deposit)
                 //   .turn(Math.toRadians(-45))
                 .setTangent(0)
                 .setTangent(Math.toRadians(45))
-                .splineToLinearHeading(new Pose2d(60.5, 54.5,Math.toRadians(-135)), Math.toRadians(45))
+                .splineToLinearHeading(new Pose2d(60.5, 54.5, Math.toRadians(-135)), Math.toRadians(45))
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(-90))
-                .splineToLinearHeading(new Pose2d(60.5, 38,Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(60.5, 38, Math.toRadians(-90)), Math.toRadians(-90))
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(60.5, 54.5,Math.toRadians(-135)), Math.toRadians(45))
+                .splineToLinearHeading(new Pose2d(60.5, 54.5, Math.toRadians(-135)), Math.toRadians(45))
                 .waitSeconds(1)
-                .splineToLinearHeading(new Pose2d(58.5,34,Math.toRadians(-45)), -Math.PI/4)
+                .splineToLinearHeading(new Pose2d(58.5, 34, Math.toRadians(-45)), -Math.PI / 4)
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(60.5, 54.5,Math.toRadians(-135)), Math.toRadians(55))
+                .splineToLinearHeading(new Pose2d(60.5, 54.5, Math.toRadians(-135)), Math.toRadians(55))
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(225))
-                .splineToLinearHeading(new Pose2d(34,0,Math.toRadians(180)), Math.PI)
-                .build());
+                .splineToLinearHeading(new Pose2d(34, 0, Math.toRadians(180)), Math.PI)
+                .build();
 
-/*
+
+
         Action updateArm = (t) -> {
-            ScoringMechanism.update();
+            scoringMechanism.update();
             return true;
         };
         Actions.runBlocking(
-                new ParallelAction(DriveBlueBucket,updateArm)
+                new ParallelAction(
+                        traj,
+                        updateArm
+                )
         );
 
     }
-
-)
-*/
-
-
-      //          scoringMechanism.verticalSlide.setTargetPosition(3400);
-
-       /* while (scoringMechanism.verticalSlide.frontMotor.getCurrentPosition() < 3200) {
-            scoringMechanism.update();
-        }
-        scoringMechanism.deposit.openClaw();
-        */
-    }
-
-
 }
+
 

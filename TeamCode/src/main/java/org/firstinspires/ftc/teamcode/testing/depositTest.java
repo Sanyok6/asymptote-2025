@@ -21,6 +21,10 @@ public class depositTest extends LinearOpMode {
                 deposit.transfer();
             } else if(gamepad1.b == true) {
                 deposit.deposit();
+            } else if (gamepad1.x == true) {
+                deposit.specGrab();
+            } else if (gamepad1.y == true) {
+                deposit.specPlace();
             }
 
 

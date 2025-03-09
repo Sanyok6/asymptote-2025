@@ -27,7 +27,7 @@ public class VerticalSlide {
         backMotor = hardwareMap.dcMotor.get("vslideBack");
     }
 
-    // max: 3400
+    // max: 3800
     public void setTargetPosition(int targetPosition) {
         this.targetPosition = targetPosition;
     }

@@ -37,4 +37,15 @@ public class Deposit {
     public void closeClaw() {
         clawServo.setPosition(0.55);
     }
+
+
+    public void specGrab() {
+        rightRotateServo.setPosition(0.5);
+        pivotServo.setPosition(0.7);
+        openClaw();
+    }
+    public void specPlace() {
+        rightRotateServo.setPosition(1);
+        pivotServo.setPosition(0.2);
+    }
 }
