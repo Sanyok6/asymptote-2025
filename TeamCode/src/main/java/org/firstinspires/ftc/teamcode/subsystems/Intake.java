@@ -1,46 +1,55 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 public class Intake {
 
-    public Servo diffyLeft;
-    public Servo diffyRight;
-    public Servo intakePivot;
-    public Servo claw;
+    public Servo servo;
+    public DcMotorEx motor;
+
+    public double motorPower = 0;
 
     public Intake(HardwareMap hardwareMap) {
-        diffyLeft = hardwareMap.servo.get("diffyLeft");
-        diffyRight = hardwareMap.servo.get("diffyRight");
-        intakePivot = hardwareMap.servo.get("intakePivot");
-        claw = hardwareMap.servo.get("intakeClaw");
+        servo = hardwareMap.servo.get("intakeServo");
+        motor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
     }
 
     public void align() {
-        diffyLeft.setPosition(0.7);
-        diffyRight.setPosition(0.1);
-        intakePivot.setPosition(0.3);
+        servo.setPosition(0.25);
     }
 
     public void lower() {
-        diffyLeft.setPosition(0.8);
-        diffyRight.setPosition(0.1);
-        intakePivot.setPosition(0.7);
+        servo.setPosition(0.1);
+        runIntake();
     }
 
     public void transfer() {
-        diffyLeft.setPosition(0);
-        diffyRight.setPosition(0.9);
-        intakePivot.setPosition(0);
+        servo.setPosition(0.25);
     }
 
-    public void openClaw() {
-        claw.setPosition(0);
+
+    public void runIntake(double power) {
+        motorPower = power;
     }
 
-    public void closeClaw() {
-        claw.setPosition(0.3);
+    public void runIntake() {
+        runIntake(1);
+    }
+
+    public void stopIntake() {
+        runIntake(0);
+    }
+
+    public void update() {
+        if (motor.getCurrent(CurrentUnit.AMPS) > 7) {
+            motor.setPower(-0.8);
+        } else {
+            motor.setPower(motorPower);
+        }
     }
 
 }

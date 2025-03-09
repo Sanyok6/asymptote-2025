@@ -43,7 +43,7 @@ public class ScoringMechanism {
             if (timeSincePositionChange.milliseconds() >= 3000) {
                 verticalSlide.setTargetPosition(3400);
             } else if (timeSincePositionChange.milliseconds() >= 2500) {
-                intake.openClaw();
+                intake.runIntake();
             } else if (timeSincePositionChange.milliseconds() >= 2000) {
                 deposit.closeClaw();
             } else if (timeSincePositionChange.milliseconds() >= 1000) {
@@ -59,5 +59,6 @@ public class ScoringMechanism {
         }
 
         verticalSlide.update();
+        intake.update();
     }
 }

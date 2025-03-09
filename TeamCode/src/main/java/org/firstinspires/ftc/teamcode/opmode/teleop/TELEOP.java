@@ -7,7 +7,6 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.ScoringMechanism;
 import org.firstinspires.ftc.teamcode.subsystems.ScoringMechanismPosition;
@@ -71,13 +70,13 @@ public class TELEOP extends LinearOpMode {
                 scoringMechanism.setPosition(ScoringMechanismPosition.DEPOSIT);
             } else if (gamepad1.right_trigger > 0.5) {
                 if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.INTAKE_LOWER) {
-                    scoringMechanism.intake.closeClaw();
+//                    scoringMechanism.intake.closeClaw();
                 } else if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.DEPOSIT) {
                     scoringMechanism.deposit.openClaw();
                 }
             } else {
                 if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.INTAKE_LOWER) {
-                    scoringMechanism.intake.openClaw();
+                    scoringMechanism.intake.runIntake();
                 }
 //                scoringMechanism.intake.openClaw();
 //                scoringMechanism.deposit.closeClaw();
