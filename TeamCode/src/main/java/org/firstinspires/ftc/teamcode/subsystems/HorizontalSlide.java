@@ -16,11 +16,13 @@ public class HorizontalSlide {
     }
 
     public void setTargetPosition(int targetPosition) {
-        this.targetPosition = targetPosition;
+        if (this.targetPosition != targetPosition) {
+            this.targetPosition = targetPosition;
 
-        motor.setTargetPosition(this.targetPosition);
-        motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        motor.setPower(1);
+            motor.setTargetPosition(this.targetPosition);
+            motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            motor.setPower(1);
+        }
     }
 
     public int getCurrentPosition() {

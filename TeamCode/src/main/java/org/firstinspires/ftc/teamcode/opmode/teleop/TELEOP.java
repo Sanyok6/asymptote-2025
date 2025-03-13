@@ -25,6 +25,12 @@ public class TELEOP extends LinearOpMode {
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
 
+        boolean deposited = false;
+        boolean slideMoved = false;
+
+        int hslidePositionIndex = 0;
+        int[] hslidePositions = {0, 100, 300, 550};
+
         waitForStart();
 
 
@@ -51,6 +57,7 @@ public class TELEOP extends LinearOpMode {
             );
 
 
+/*
             if (targetHslidePos < 400 && gamepad1.dpad_up) {
                 targetHslidePos += 2;
                 scoringMechanism.horizontalSlide.setTargetPosition(targetHslidePos);
@@ -58,34 +65,57 @@ public class TELEOP extends LinearOpMode {
                 targetHslidePos -= 2;
                 scoringMechanism.horizontalSlide.setTargetPosition(targetHslidePos);
             }
+*/
 
-            if (gamepad1.a) {
-                if (scoringMechanism.horizontalSlide.getCurrentPosition() > 100) {
-                    scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_LOWER);
+            if (gamepad1.dpad_up) {
+                if (!slideMoved && hslidePositionIndex < hslidePositions.length-1) {
+                    hslidePositionIndex++;
+                    scoringMechanism.horizontalSlide.setTargetPosition(hslidePositions[hslidePositionIndex]);
+                    slideMoved = true;
                 }
-            } else if (gamepad1.b) {
-                scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
-            } else if (gamepad1.x) {
-                scoringMechanism.setPosition(ScoringMechanismPosition.TRANSFER);
-            } else if (gamepad1.y) {
-                scoringMechanism.setPosition(ScoringMechanismPosition.DEPOSIT);
-            } else if (gamepad1.right_trigger > 0.5) {
-//                if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.INTAKE_LOWER) {
-//                    scoringMechanism.intake.runIntake();
-//                } else
-//                    if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.DEPOSIT) {
-//                        scoringMechanism.deposit.openClaw();
-//                    }
-                scoringMechanism.deposit.openClaw();
+            } else if (gamepad1.dpad_down) {
+                if (!slideMoved && hslidePositionIndex > 0) {
+                    hslidePositionIndex--;
+                    scoringMechanism.horizontalSlide.setTargetPosition(hslidePositions[hslidePositionIndex]);
+                    slideMoved = true;
+                }
             } else {
-                if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.INTAKE_LOWER) {
-                    scoringMechanism.intake.runIntake();
+                slideMoved = false;
+            }
+
+            if (gamepad1.right_trigger > 0.5) {
+                if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.DEPOSIT) {
+                    scoringMechanism.deposit.openClaw();
+                    deposited = true;
+                } else {
+                    if (scoringMechanism.horizontalSlide.getCurrentPosition() > 100) {
+                        scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_LOWER);
+                        if (gamepad1.left_trigger > 0.5) {
+                            scoringMechanism.intake.runIntake(-1);
+                        } else {
+                            scoringMechanism.intake.runIntake();
+                        }
+                    }
                 }
-                scoringMechanism.intake.stopIntake();
+            } else if (gamepad1.a) {
+                scoringMechanism.setPosition(ScoringMechanismPosition.TRANSFER);
+                hslidePositionIndex = 0;
+            } else {
+                if (deposited) {
+                    scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
+                    deposited=false;
+                }
+                if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.INTAKE_LOWER) {
+                    scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
+                    scoringMechanism.intake.stopIntake();
+                }
             }
 
             scoringMechanism.update();
 
+            telemetry.addData("scoring mechanism position", scoringMechanism.getCurrentPosition());
+            telemetry.addData("hslide target position", hslidePositions[hslidePositionIndex]);
+            telemetry.addData("hslide actual position", scoringMechanism.horizontalSlide.getCurrentPosition());
             telemetry.update();
         }
     }

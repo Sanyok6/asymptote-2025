@@ -40,23 +40,31 @@ public class ScoringMechanism {
             intake.lower();
             deposit.drive();
         } else if (position == ScoringMechanismPosition.TRANSFER) {
-            if (timeSincePositionChange.milliseconds() >= 4000) {
-                verticalSlide.setTargetPosition(3400);
-                deposit.deposit();
-                intake.stopIntake();
-            } else if (timeSincePositionChange.milliseconds() >= 3500) {
-                intake.runIntake();
-                deposit.drive();
-            } else if (timeSincePositionChange.milliseconds() >= 3000) {
-                deposit.setClawPosition(0.5);
-            } else if (timeSincePositionChange.milliseconds() >= 2000) {
-                deposit.transfer();
+            if ((horizontalSlide.getCurrentPosition() < 25 && horizontalSlide.getCurrentPosition() > -30)) { // if hslide position is right
+                if (timeSincePositionChange.milliseconds() >= 1500) {
+                    intake.stopIntake();
+                    this.setPosition(ScoringMechanismPosition.DEPOSIT);
+                } else if (timeSincePositionChange.milliseconds() >= 1000) {
+                    intake.runIntake();
+                    deposit.drive();
+                } else if (timeSincePositionChange.milliseconds() >= 500) {
+                    deposit.setClawPosition(0.5);
+                    intake.openGate();
+                } else {
+                    deposit.transfer();
+                    intake.transfer();
+                    deposit.setClawPosition(0.2);
+                    horizontalSlide.setTargetPosition(0);
+                }
             } else {
+                horizontalSlide.setTargetPosition(0);
                 intake.transfer();
                 deposit.drive();
                 deposit.setClawPosition(0.2);
+                timeSincePositionChange.reset();
             }
         } else if (position == ScoringMechanismPosition.DEPOSIT) {
+            verticalSlide.setTargetPosition(3400);
             intake.transfer();
             deposit.deposit();
         }

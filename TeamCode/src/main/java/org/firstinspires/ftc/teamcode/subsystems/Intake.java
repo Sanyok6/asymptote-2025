@@ -27,13 +27,11 @@ public class Intake {
 
     public void lower() {
         servo.setPosition(0.1);
-        runIntake();
         closeGate();
     }
 
     public void transfer() {
         servo.setPosition(0.35);
-        openGate();
     }
 
 
