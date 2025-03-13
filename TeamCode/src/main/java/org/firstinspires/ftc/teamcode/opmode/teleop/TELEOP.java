@@ -51,7 +51,6 @@ public class TELEOP extends LinearOpMode {
             );
 
 
-
             if (targetHslidePos < 400 && gamepad1.dpad_up) {
                 targetHslidePos += 2;
                 scoringMechanism.horizontalSlide.setTargetPosition(targetHslidePos);
@@ -61,7 +60,9 @@ public class TELEOP extends LinearOpMode {
             }
 
             if (gamepad1.a) {
-                scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_LOWER);
+                if (scoringMechanism.horizontalSlide.getCurrentPosition() > 100) {
+                    scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_LOWER);
+                }
             } else if (gamepad1.b) {
                 scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
             } else if (gamepad1.x) {
@@ -69,17 +70,18 @@ public class TELEOP extends LinearOpMode {
             } else if (gamepad1.y) {
                 scoringMechanism.setPosition(ScoringMechanismPosition.DEPOSIT);
             } else if (gamepad1.right_trigger > 0.5) {
-                if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.INTAKE_LOWER) {
-//                    scoringMechanism.intake.closeClaw();
-                } else if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.DEPOSIT) {
-                    scoringMechanism.deposit.openClaw();
-                }
+//                if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.INTAKE_LOWER) {
+//                    scoringMechanism.intake.runIntake();
+//                } else
+//                    if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.DEPOSIT) {
+//                        scoringMechanism.deposit.openClaw();
+//                    }
+                scoringMechanism.deposit.openClaw();
             } else {
                 if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.INTAKE_LOWER) {
                     scoringMechanism.intake.runIntake();
                 }
-//                scoringMechanism.intake.openClaw();
-//                scoringMechanism.deposit.closeClaw();
+                scoringMechanism.intake.stopIntake();
             }
 
             scoringMechanism.update();

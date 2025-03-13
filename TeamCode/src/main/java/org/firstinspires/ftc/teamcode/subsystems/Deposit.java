@@ -19,25 +19,26 @@ public class Deposit {
     }
 
     public void transfer() {
-        rightRotateServo.setPosition(0.55);
-        pivotServo.setPosition(1);
+        rightRotateServo.setPosition(0.35);
+        pivotServo.setPosition(0.9);
     }
     public void drive() {
-        rightRotateServo.setPosition(0.6);
+        rightRotateServo.setPosition(0.5);
         pivotServo.setPosition(0.9);
     }
     public void deposit()
     {
-        rightRotateServo.setPosition(0.95);
+        rightRotateServo.setPosition(1);
         pivotServo.setPosition(0.1);
     }
+
+    public void setClawPosition(double pos) {clawServo.setPosition(pos);}
     public void openClaw() {
-        clawServo.setPosition(0);
+        setClawPosition(0);
     }
     public void closeClaw() {
-        clawServo.setPosition(0.55);
+        setClawPosition(0.55);
     }
-
 
     public void specGrab() {
         rightRotateServo.setPosition(0.5);

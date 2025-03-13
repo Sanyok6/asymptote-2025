@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
 @Config
 @TeleOp(name="depositTest", group="testing")
-public class depositTest extends LinearOpMode {
+public class depositPositionsTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {

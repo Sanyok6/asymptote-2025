@@ -40,18 +40,21 @@ public class ScoringMechanism {
             intake.lower();
             deposit.drive();
         } else if (position == ScoringMechanismPosition.TRANSFER) {
-            if (timeSincePositionChange.milliseconds() >= 3000) {
+            if (timeSincePositionChange.milliseconds() >= 4000) {
                 verticalSlide.setTargetPosition(3400);
-            } else if (timeSincePositionChange.milliseconds() >= 2500) {
+                deposit.deposit();
+                intake.stopIntake();
+            } else if (timeSincePositionChange.milliseconds() >= 3500) {
                 intake.runIntake();
+                deposit.drive();
+            } else if (timeSincePositionChange.milliseconds() >= 3000) {
+                deposit.setClawPosition(0.5);
             } else if (timeSincePositionChange.milliseconds() >= 2000) {
-                deposit.closeClaw();
-            } else if (timeSincePositionChange.milliseconds() >= 1000) {
                 deposit.transfer();
             } else {
                 intake.transfer();
                 deposit.drive();
-                deposit.openClaw();
+                deposit.setClawPosition(0.2);
             }
         } else if (position == ScoringMechanismPosition.DEPOSIT) {
             intake.transfer();

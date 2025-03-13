@@ -8,38 +8,36 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 @Config
-@TeleOp(name="active intake test", group="testing")
-public class activeIntakeTest extends LinearOpMode {
+@TeleOp(name="deposit servos test", group="testing")
+public class depositServosTest extends LinearOpMode {
 
-    public static double intakeMotorPower = 0;
-    public static double servoPosition = 0;
+    public static double rightRotateServoPos = 1;
+    public static double pivotServoPos = 0.5;
+    public static double clawServoPos = 0;
+
 
     @Override
     public void runOpMode() {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        DcMotorEx motor = hardwareMap.get(DcMotorEx.class,"intakeMotor");
-        Servo servo = hardwareMap.get(Servo.class,"intakeServo");
+        Servo rightRotateServo = hardwareMap.servo.get("rightDepositRotate");
+        Servo pivotServo = hardwareMap.servo.get("depositPivot");
+        Servo clawServo = hardwareMap.servo.get("depositClaw");
 
         waitForStart();
 
         while (opModeIsActive()) {
-            if (motor.getCurrent(CurrentUnit.AMPS) > 7) {
-                motor.setPower(-0.8);
-            } else {
-                motor.setPower(intakeMotorPower);
-            }
+            rightRotateServo.setPosition(rightRotateServoPos);
+            pivotServo.setPosition(pivotServoPos);
+            clawServo.setPosition(clawServoPos);
 
-            servo.setPosition(servoPosition);
-
-            telemetry.addData("Servo Position ", servo.getPosition());
-            telemetry.addData("Motor current ", motor.getCurrent(CurrentUnit.AMPS));
             telemetry.update();
         }
     }
