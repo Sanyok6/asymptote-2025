@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.subsystems.ScoringMechanism;
 
 
 @Config
-@Autonomous(name = "BLUENoBuckets", group = "Autonomous")
-public class AutoBlueNoBuckets extends LinearOpMode {
+@Autonomous(name = "NoBucketsAuto", group = "Autonomous")
+public class NoBucketsAuto extends LinearOpMode {
     public void runOpMode() {
         // instantiate your MecanumDrive at a particular pose.
 

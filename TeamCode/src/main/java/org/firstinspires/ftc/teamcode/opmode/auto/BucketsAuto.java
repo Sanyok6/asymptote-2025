@@ -3,40 +3,23 @@ package org.firstinspires.ftc.teamcode.opmode.auto;
 // RR-specific imports
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.acmerobotics.roadrunner.PoseMap;
+
 import org.firstinspires.ftc.teamcode.roadrunner.PinpointDrive;
 import org.firstinspires.ftc.teamcode.subsystems.ScoringMechanism;
 import org.firstinspires.ftc.teamcode.subsystems.ScoringMechanismPosition;
 
-import androidx.annotation.NonNull;
-
 // RR-specific imports
-import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.Vector2d;
-import com.acmerobotics.roadrunner.ftc.Actions;
 
 // Non-RR imports
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.acmerobotics.roadrunner.InstantFunction;
+
 
 @Config
-@Autonomous(name = "BLUEBuckets", group = "Autonomous")
-public class AutoBlueBuckets extends LinearOpMode {
+@Autonomous(name = "BucketsAuto", group = "Autonomous")
+public class BucketsAuto extends LinearOpMode {
     public void runOpMode() {
         // instantiate your MecanumDrive at a particular pose.
 
