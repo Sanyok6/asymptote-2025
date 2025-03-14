@@ -4,9 +4,12 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriver;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.ScoringMechanism;
 import org.firstinspires.ftc.teamcode.subsystems.ScoringMechanismPosition;
@@ -31,14 +34,26 @@ public class TELEOP extends LinearOpMode {
         int hslidePositionIndex = 0;
         int[] hslidePositions = {0, 100, 300, 550};
 
+        GoBildaPinpointDriver odo = hardwareMap.get(GoBildaPinpointDriver.class,"pinpoint");
+
         waitForStart();
 
 
         while (opModeIsActive()) {
 
+            if (gamepad1.y) {
+                odo.resetPosAndIMU();
+            }
+
+            double currentHeading = odo.getHeading();
+
             double x = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double y = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = -gamepad1.right_stick_x;
+
+            double rotatedX = x * Math.cos(-currentHeading) - y * Math.sin(-currentHeading);
+            double rotatedY = x * Math.sin(-currentHeading) + y * Math.cos(-currentHeading);
+
 
 //            // Denominator is the largest motor power (absolute value) or 1
 //            // This ensures all the powers maintain the same ratio,
@@ -51,7 +66,7 @@ public class TELEOP extends LinearOpMode {
 
             drive.setDrivePowers(
                     new PoseVelocity2d(
-                            new Vector2d(x, y),
+                            new Vector2d(rotatedX, rotatedY),
                             rx
                     )
             );
@@ -113,9 +128,11 @@ public class TELEOP extends LinearOpMode {
 
             scoringMechanism.update();
 
+            odo.update();
             telemetry.addData("scoring mechanism position", scoringMechanism.getCurrentPosition());
             telemetry.addData("hslide target position", hslidePositions[hslidePositionIndex]);
             telemetry.addData("hslide actual position", scoringMechanism.horizontalSlide.getCurrentPosition());
+            telemetry.addData("heading", odo.getHeading()*180/3.1415926);
             telemetry.update();
         }
     }
