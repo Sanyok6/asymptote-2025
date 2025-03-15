@@ -36,9 +36,9 @@ public class BucketsAuto extends LinearOpMode {
                 // PLACE PRELOADED SAMPLE
 
                 .stopAndAdd(() -> scoringMechanism.setPosition(ScoringMechanismPosition.DEPOSIT))
-
+                .waitSeconds(0.75)
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(60.5, 54, Math.toRadians(-135)), Math.toRadians(45))
+                .splineToLinearHeading(new Pose2d(56, 50, Math.toRadians(-135)), Math.toRadians(45))
 
                 .stopAndAdd(() -> {
                     scoringMechanism.deposit.openClaw();
@@ -57,7 +57,7 @@ public class BucketsAuto extends LinearOpMode {
                 })
 
                 .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(50.8, 45, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(49.3, 43.25, Math.toRadians(-90)), Math.toRadians(-90))
 
                 .waitSeconds(0.5)
                 .stopAndAdd(() -> {
@@ -69,12 +69,12 @@ public class BucketsAuto extends LinearOpMode {
                 // PLACE FIRST SAMPLE
 
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(60.5, 54.5, Math.toRadians(-135)), Math.toRadians(45))
+                .splineToLinearHeading(new Pose2d(57.5, 51.5, Math.toRadians(-135)), Math.toRadians(45))
                 .stopAndAdd(() -> {
                     scoringMechanism.deposit.openClaw();
                     scoringMechanism.update();
                 })
-                .waitSeconds(0.25)
+                .waitSeconds(0.36)
 
 
                 // PICKUP SECOND SAMPLE
@@ -87,7 +87,7 @@ public class BucketsAuto extends LinearOpMode {
                 })
 
                 .setTangent(Math.toRadians(-90))
-                .splineToLinearHeading(new Pose2d(60.5, 43.5, Math.toRadians(-85)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(60.5, 43.5, Math.toRadians(-70)), Math.toRadians(-90))
 
                 .waitSeconds(0.5)
                 .stopAndAdd(() -> {
@@ -99,7 +99,7 @@ public class BucketsAuto extends LinearOpMode {
                 // PLACE SECOND SAMPLE
 
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(60.5, 54.5, Math.toRadians(-135)), Math.toRadians(45))
+                .splineToLinearHeading(new Pose2d(57.5, 52, Math.toRadians(-135)), Math.toRadians(45))
                 .stopAndAdd(() -> {
                     scoringMechanism.deposit.openClaw();
                     scoringMechanism.update();
@@ -117,7 +117,7 @@ public class BucketsAuto extends LinearOpMode {
                 })
 
                 .setTangent(Math.toRadians(-90))
-                .splineToLinearHeading(new Pose2d(57, 33, Math.toRadians(-40)), -Math.PI/4)
+                .splineToLinearHeading(new Pose2d(55, 36, Math.toRadians(-35)), -Math.PI/4)
 
                 .waitSeconds(1)
                 .stopAndAdd(() -> {
@@ -129,22 +129,21 @@ public class BucketsAuto extends LinearOpMode {
                 // PLACE THIRD SAMPLE
 
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(60.5, 54.5, Math.toRadians(-135)), Math.toRadians(55))
+                .splineToLinearHeading(new Pose2d(57.5, 52, Math.toRadians(-135)), Math.toRadians(55))
                 .stopAndAdd(() -> {
                     scoringMechanism.deposit.openClaw();
                     scoringMechanism.update();
                 })
                 .waitSeconds(0.25)
 
-
-                .waitSeconds(30)
+//                 .waitSeconds(30)
 
 
                 // PARK
 
                 .waitSeconds(0.75)
                 .setTangent(Math.toRadians(225))
-                .splineToLinearHeading(new Pose2d(34, 0, Math.toRadians(180)), Math.PI) //park
+                .splineToLinearHeading(new Pose2d(28, 8, Math.toRadians(180)), Math.PI) //park
 
                 .build();
 
