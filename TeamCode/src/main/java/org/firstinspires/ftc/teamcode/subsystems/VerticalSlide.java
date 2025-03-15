@@ -35,7 +35,7 @@ public class VerticalSlide {
     public void update() {
 
         // obtain the encoder position
-        double encoderPosition = frontMotor.getCurrentPosition();
+        double encoderPosition = getCurrentPosition();
         // calculate the error
         double error = targetPosition - encoderPosition;
 
@@ -60,6 +60,10 @@ public class VerticalSlide {
 
         // reset the timer for next time
         timer.reset();
+    }
+
+    public int getCurrentPosition() {
+        return frontMotor.getCurrentPosition();
     }
 }
 

@@ -37,10 +37,11 @@ public class ScoringMechanism {
             deposit.drive();
             verticalSlide.setTargetPosition(0);
         } else if (position == ScoringMechanismPosition.INTAKE_LOWER) {
-            intake.lower();
+            if (horizontalSlide.getCurrentPosition() > 100) intake.lower();
             deposit.drive();
+            verticalSlide.setTargetPosition(0);
         } else if (position == ScoringMechanismPosition.TRANSFER) {
-            if ((horizontalSlide.getCurrentPosition() < 25 && horizontalSlide.getCurrentPosition() > -30)) { // if hslide position is right
+            if (horizontalSlide.getCurrentPosition() < 25 && horizontalSlide.getCurrentPosition() > -40 && verticalSlide.frontMotor.getCurrentPosition() < 100) { // if slide positions are right
                 if (timeSincePositionChange.milliseconds() >= 1500) {
                     intake.stopIntake();
                     this.setPosition(ScoringMechanismPosition.DEPOSIT);

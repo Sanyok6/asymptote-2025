@@ -33,75 +33,114 @@ public class BucketsAuto extends LinearOpMode {
 
         Action traj = drive.actionBuilder(beginPose)
 
+                // PLACE PRELOADED SAMPLE
+
                 .stopAndAdd(() -> scoringMechanism.setPosition(ScoringMechanismPosition.DEPOSIT))
 
                 .setTangent(0)
                 .splineToLinearHeading(new Pose2d(60.5, 54, Math.toRadians(-135)), Math.toRadians(45))
 
-                .waitSeconds(0.5)
-                .stopAndAdd(() -> scoringMechanism.deposit.openClaw())
-                .waitSeconds(0.25)
-                .afterTime(0.5, () -> {
-                    scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
-//                    scoringMechanism.horizontalSlide.setTargetPosition(200);
+                .stopAndAdd(() -> {
+                    scoringMechanism.deposit.openClaw();
+                    scoringMechanism.update();
                 })
+                .waitSeconds(0.25)
 
-//                        .afterTime(0.5, () -> {
-//                            scoringMechanism.intake.runIntake(0.5);
-//                        })
-//                        .afterTime(0.1, () -> {
-//                            scoringMechanism.intake.runIntake(0);
-//                        })
 
-                .waitSeconds(30)
+                // PICKUP FIRST SAMPLE
+
+                .stopAndAdd( () -> {
+                    scoringMechanism.horizontalSlide.setTargetPosition(300);
+                    scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_LOWER);
+                    scoringMechanism.intake.runIntake();
+                    scoringMechanism.update();
+                })
 
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(50.8, 45, Math.toRadians(-90)), Math.toRadians(-90))
 
-                // .turn(Math.toRadians(45))
-                // .strafeTo(new Vector2d(48,46))
-                // .waitSeconds(1)
-                //   .turn(Math.toRadians(-45))
-                // .setTangent(0)
-                .afterTime(0.5, () -> scoringMechanism.setPosition(ScoringMechanismPosition.DEPOSIT))
-                .waitSeconds(0.75)
-                .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(60.5, 54.5, Math.toRadians(-135)), Math.toRadians(45))
-//                        .waitSeconds(1)
-//                        .stopAndAdd(() -> scoringMechanism.deposit.openClaw())
-//                        .waitSeconds(0.75)
-//                        .afterTime(0.5, () -> {
-//                            scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
-//                            scoringMechanism.horizontalSlide.setTargetPosition(200);
-//                        })
+                .waitSeconds(0.5)
+                .stopAndAdd(() -> {
+                    scoringMechanism.setPosition(ScoringMechanismPosition.TRANSFER);
+                })
+                .waitSeconds(3)
 
-                .waitSeconds(0.75)
-                .setTangent(Math.toRadians(-90))
-                .splineToLinearHeading(new Pose2d(60.5, 45, Math.toRadians(-90)), Math.toRadians(-90))
-                //  .waitSeconds(1)
-                // .afterTime(0.5, () -> scoringMechanism.setPosition(ScoringMechanismPosition.DEPOSIT))
-                .waitSeconds(0.75)
+
+                // PLACE FIRST SAMPLE
+
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(60.5, 54.5, Math.toRadians(-135)), Math.toRadians(45))
-                // .waitSeconds(1)
-                /*
-                 .stopAndAdd(() -> scoringMechanism.deposit.openClaw())
-                 .waitSeconds(0.75)
-                 .afterTime(0.5, () -> {
-                     scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
-                     scoringMechanism.horizontalSlide.setTargetPosition(200);})
-                */
-                .waitSeconds(0.75)
+                .stopAndAdd(() -> {
+                    scoringMechanism.deposit.openClaw();
+                    scoringMechanism.update();
+                })
+                .waitSeconds(0.25)
+
+
+                // PICKUP SECOND SAMPLE
+
+                .stopAndAdd(() -> {
+                    scoringMechanism.horizontalSlide.setTargetPosition(250);
+                    scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_LOWER);
+                    scoringMechanism.intake.runIntake();
+                    scoringMechanism.update();
+                })
+
                 .setTangent(Math.toRadians(-90))
-                .splineToLinearHeading(new Pose2d(54, 40.5, Math.toRadians(-40)), -Math.PI / 4)
-                // .waitSeconds(1)
-                // .afterTime(0.5, () -> scoringMechanism.setPosition(ScoringMechanismPosition.DEPOSIT))
-                .waitSeconds(0.75)
+                .splineToLinearHeading(new Pose2d(60.5, 43.5, Math.toRadians(-85)), Math.toRadians(-90))
+
+                .waitSeconds(0.5)
+                .stopAndAdd(() -> {
+                    scoringMechanism.setPosition(ScoringMechanismPosition.TRANSFER);
+                })
+                .waitSeconds(3)
+
+
+                // PLACE SECOND SAMPLE
+
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(60.5, 54.5, Math.toRadians(-135)), Math.toRadians(45))
+                .stopAndAdd(() -> {
+                    scoringMechanism.deposit.openClaw();
+                    scoringMechanism.update();
+                })
+                .waitSeconds(0.25)
+
+
+                // PICKUP THIRD SAMPLE
+
+                .afterTime(0.25, () -> {
+                    scoringMechanism.horizontalSlide.setTargetPosition(150);
+                    scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_LOWER);
+                    scoringMechanism.intake.runIntake();
+                    scoringMechanism.update();
+                })
+
+                .setTangent(Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(57, 33, Math.toRadians(-40)), -Math.PI/4)
+
+                .waitSeconds(1)
+                .stopAndAdd(() -> {
+                    scoringMechanism.setPosition(ScoringMechanismPosition.TRANSFER);
+                })
+                .waitSeconds(3)
+
+
+                // PLACE THIRD SAMPLE
+
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(60.5, 54.5, Math.toRadians(-135)), Math.toRadians(55))
-                // .waitSeconds(1)
-                //  .stopAndAdd(() -> scoringMechanism.deposit.openClaw())
+                .stopAndAdd(() -> {
+                    scoringMechanism.deposit.openClaw();
+                    scoringMechanism.update();
+                })
+                .waitSeconds(0.25)
 
+
+                .waitSeconds(30)
+
+
+                // PARK
 
                 .waitSeconds(0.75)
                 .setTangent(Math.toRadians(225))

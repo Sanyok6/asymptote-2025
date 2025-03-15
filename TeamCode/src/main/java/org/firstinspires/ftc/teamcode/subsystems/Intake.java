@@ -52,7 +52,7 @@ public class Intake {
     public void closeGate() { gate.setPosition(0.6); }
 
     public void update() {
-        if (motor.getCurrent(CurrentUnit.AMPS) > 7) {
+        if (motor.getCurrent(CurrentUnit.AMPS) > 7.5) {
             motor.setPower(-0.8);
         } else {
             motor.setPower(motorPower);
