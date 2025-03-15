@@ -28,18 +28,30 @@ public class NoBuckets2Piece extends LinearOpMode {
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         .setTangent(-Math.PI/2)
+                        // MOVE FOR FIRST SPECIMEN
+
                         .splineToLinearHeading(new Pose2d(-9,40,Math.PI/2), -Math.PI/2)
-                        // .strafeTo(new Vector2d(-9,38))
                         .setTangent(Math.toRadians(-90))
                         .lineToY(34)
                         .waitSeconds(0.5)
                         .setTangent(Math.toRadians(180))
+                        // CODE TO PLACE FIRST SPECIMEN
+
+                        // MOVING TO PICKUP SECOND SPECIMEN
+
                         .splineToLinearHeading(new Pose2d(-48,51,Math.PI/2), Math.PI/2)
                         .waitSeconds(0.5)
                         .setTangent(Math.toRadians(-90))
+
+                        // MOVE TO PLACE SECOND SPECIMEN
+
                         .splineToLinearHeading(new Pose2d(-9,40,Math.PI/2), 0)
                         .setTangent(Math.toRadians(-90))
                         .lineToY(34)
+
+                        // CODE TO PLACE SECOND SPECIMEN
+
+                        // PUSHING 2 PIECES
                         .waitSeconds(0.5)
                         .setTangent(Math.toRadians(180))
                         .splineToLinearHeading(new Pose2d(-36,30,Math.PI/2), -Math.PI/2)
@@ -51,18 +63,32 @@ public class NoBuckets2Piece extends LinearOpMode {
                         .splineToLinearHeading(new Pose2d(-62,12,Math.PI/2), -Math.PI)
                         .setTangent(Math.PI/2)
                         .lineToY(47)
+
+                        // END OF PUSHING PIECES
+
+                        // MOVING TO PICKUP THIRD SPECIMEN
                         .splineToLinearHeading(new Pose2d(-48,51,Math.PI/2), Math.PI/2)
                         .setTangent(Math.toRadians(-45))
+
+                        //MOVE TO PLACE THIRD SPECIMEN
+
                         .splineToConstantHeading(new Vector2d(-8, 36), -Math.PI / 2) //changed to a little higher?
                         .setTangent(Math.toRadians(-90))
                         .lineToY(34)
                         .waitSeconds(0.5)
+                       // CODE FOR PLACING THIRD SPECIMEN
+
+                       // MOVING TO PICKUP FOURTH SPECIMEN
                         .setTangent(Math.toRadians(135))
                         .splineToLinearHeading(new Pose2d(-48, 51, Math.PI/2), Math.PI/2)
                         .setTangent(Math.toRadians(-45))
+
+                        // MOVE TO PLACE FOURTH SPECIMEN
                         .splineToConstantHeading(new Vector2d(-8, 36), -Math.PI / 2) //changed to a little higher?
                         .setTangent(Math.toRadians(-90))
                         .lineToY(34)
+
+                        // CODE TO PLACE FOURTH SPECIMEN
                         .waitSeconds(0.5)
                         .setTangent(Math.toRadians(135))
                         .splineToLinearHeading(new Pose2d(-48, 51, Math.PI/2), Math.PI/2)
