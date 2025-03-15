@@ -68,6 +68,22 @@ public class ScoringMechanism {
             verticalSlide.setTargetPosition(3400);
             intake.transfer();
             deposit.deposit();
+        } else if (position == ScoringMechanismPosition.SPEC_GRAB) {
+            intake.align();
+            deposit.specGrab();
+        } else if (position == ScoringMechanismPosition.SPEC_ALIGN) {
+            if (timeSincePositionChange.milliseconds() > 500) {
+                deposit.specPlace();
+                verticalSlide.setTargetPosition(400);
+            } else deposit.closeClaw();
+        } else if (position == ScoringMechanismPosition.SPEC_PLACE) {
+            if (timeSincePositionChange.milliseconds() > 750) {
+                this.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
+            } else if (timeSincePositionChange.milliseconds() > 500) {
+                deposit.openClaw();
+            } else {
+                verticalSlide.setTargetPosition(800);
+            }
         }
 
         verticalSlide.update();

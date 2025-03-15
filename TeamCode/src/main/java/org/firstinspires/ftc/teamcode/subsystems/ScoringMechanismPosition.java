@@ -4,5 +4,8 @@ public enum ScoringMechanismPosition {
     INTAKE_ALIGN,
     INTAKE_LOWER,
     TRANSFER,
-    DEPOSIT
+    DEPOSIT,
+    SPEC_GRAB,
+    SPEC_ALIGN,
+    SPEC_PLACE
 }

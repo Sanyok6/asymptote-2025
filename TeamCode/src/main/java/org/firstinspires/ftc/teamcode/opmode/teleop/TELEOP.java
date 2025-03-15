@@ -28,7 +28,7 @@ public class TELEOP extends LinearOpMode {
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
 
-        boolean deposited = false;
+        boolean triggerPressed = false;
         boolean slideMoved = false;
 
         int hslidePositionIndex = 0;
@@ -101,7 +101,13 @@ public class TELEOP extends LinearOpMode {
             if (gamepad1.right_trigger > 0.5) {
                 if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.DEPOSIT) {
                     scoringMechanism.deposit.openClaw();
-                    deposited = true;
+                    triggerPressed = true;
+                } else if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.SPEC_GRAB) {
+                    scoringMechanism.setPosition(ScoringMechanismPosition.SPEC_ALIGN);
+                    triggerPressed = true;
+                } else if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.SPEC_ALIGN && !triggerPressed) {
+                    scoringMechanism.setPosition(ScoringMechanismPosition.SPEC_PLACE);
+                    triggerPressed = true;
                 } else {
                     if (scoringMechanism.horizontalSlide.getCurrentPosition() > 100) {
                         scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_LOWER);
@@ -115,10 +121,14 @@ public class TELEOP extends LinearOpMode {
             } else if (gamepad1.a) {
                 scoringMechanism.setPosition(ScoringMechanismPosition.TRANSFER);
                 hslidePositionIndex = 0;
+            } else if (gamepad1.x) {
+                scoringMechanism.setPosition(ScoringMechanismPosition.SPEC_GRAB);
             } else {
-                if (deposited) {
-                    scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
-                    deposited=false;
+                if (triggerPressed) {
+                    if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.DEPOSIT) {
+                        scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
+                    }
+                    triggerPressed = false;
                 }
                 if (scoringMechanism.getCurrentPosition() == ScoringMechanismPosition.INTAKE_LOWER) {
                     scoringMechanism.setPosition(ScoringMechanismPosition.INTAKE_ALIGN);
